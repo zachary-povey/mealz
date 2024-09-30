@@ -1,0 +1,21 @@
+<div>
+    <dev>{{.Section | title}}</dev>
+    {{ range $index, $element := .Paginator.Pages }}
+    <div>
+        - <a href="{{ .Permalink }}">{{ .Title }}</a>
+        {{$page := .}}
+        {{with .Description}}
+        <p>{{.}}</p>
+        {{end}}
+        <div>
+            {{with .Date}}
+                {{.Format "Jan 2 2006"}}
+            {{end}}
+            <br>
+            {{with .Params.tags}}
+                Tags: {{ delimit . ", " }}
+            {{end}}
+        </div>
+    </div>
+    {{end}}
+</div>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+</head>
+
+<body>
+    <article>
+        <ul id="ingredient-list">
+            <t2>Ingredients for:</t2>
+            <select id="serving-size" onchange="updateIngredients()">
+                <option value="1">1 serving</option>
+                <option value="2" selected>2 servings</option>
+                <option value="3">3 servings</option>
+                <option value="4">4 servings</option>
+                <option value="6">6 servings</option>
+            </select>
+            {{ range .Page.Params.ingredients }}
+            <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
+                data-units="{{ .quantity_per_serving.units }}">
+                {{ printf "%.2f" .quantity_per_serving.value }} {{ .quantity_per_serving.units }} {{ .name }}
+            </li>
+            {{ end }}
+        </ul>
+
+        {{ .Content }}
+    </article>
+    <script>
+        function updateIngredients() {
+            const servings = document.getElementById('serving-size').value;
+            const ingredients = document.querySelectorAll('#ingredient-list li');
+
+            ingredients.forEach(ingredient => {
+                const baseQuantity = parseFloat(ingredient.getAttribute('data-quantity'));
+                const units = ingredient.getAttribute('data-units');
+                const name = ingredient.getAttribute('data-name');
+                const scaledQuantity = (baseQuantity * servings).toFixed(2);
+                
+                ingredient.textContent = `${scaledQuantity} ${units} ${name}`;
+
+                const mentions = document.querySelectorAll(`.${name}`);
+
+                mentions.forEach(mention => {
+                    var mentionQuantity = scaledQuantity;
+                    const fraction = parseFloat(mention.getAttribute('fraction'));
+                    if (fraction === fraction) {
+                        mentionQuantity = mentionQuantity * fraction;
+                    }
+                    mention.textContent = `${mentionQuantity} ${units} ${name}`;
+                });
+
+            });
+        }
+        updateIngredients();
+    </script>
+</body>
+
+</html>
