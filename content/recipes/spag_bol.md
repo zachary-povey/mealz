@@ -10,4 +10,4 @@ ingredients:
     quantity_per_serving:
       value: 0.25
 ---
-Wack it in pan with {{< ingredient_mention name="cumin" fraction="0.5">}}
+Wack {{< ingredient_mention name="onion" >}} in pan with {{< ingredient_mention name="cumin" fraction="0.5">}}

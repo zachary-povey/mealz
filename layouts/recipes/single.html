@@ -15,7 +15,12 @@
                 <option value="2" selected>2 servings</option>
                 <option value="3">3 servings</option>
                 <option value="4">4 servings</option>
+                <option value="5">5 servings</option>
                 <option value="6">6 servings</option>
+                <option value="7">7 servings</option>
+                <option value="8">8 servings</option>
+                <option value="9">9 servings</option>
+                <option value="10">10 servings</option>
             </select>
             {{ range .Page.Params.ingredients }}
             <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
@@ -28,8 +33,17 @@
         {{ .Content }}
     </article>
     <script>
-        function updateIngredients() {
-            const servings = document.getElementById('serving-size').value;
+        function updateIngredients(initial=false) {
+            const servingSelect = document.getElementById('serving-size')
+            if (initial) {
+                const urlParams = new URLSearchParams(window.location.search);
+                const portions = urlParams.get('portions');
+                if (portions !== null) {
+                    servingSelect.value = portions;
+                }
+            }
+
+            const servings = servingSelect.value;
             const ingredients = document.querySelectorAll('#ingredient-list li');
 
             ingredients.forEach(ingredient => {
@@ -53,7 +67,8 @@
 
             });
         }
-        updateIngredients();
+        updateIngredients(initial=true);
+
     </script>
 </body>
 
