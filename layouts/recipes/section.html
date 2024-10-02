@@ -1,3 +1,4 @@
+{{ define "main" }}
 <div>
     <dev>{{.Section | title}}</dev>
     {{ range $index, $element := .Paginator.Pages }}
@@ -19,3 +20,4 @@
     </div>
     {{end}}
 </div>
+{{ end }}

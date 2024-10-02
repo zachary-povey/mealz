@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>{{ .Title }}</title>
-</head>
-
-<body>
+{{ define "main" }}
     <article>
         <ul id="ingredient-list">
             <t2>Ingredients for:</t2>
@@ -70,6 +62,4 @@
         updateIngredients(initial=true);
 
     </script>
-</body>
-
-</html>
+{{ end }}
