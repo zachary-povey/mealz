@@ -3,24 +3,28 @@
 {{- $paginator := .Paginate $pages -}}
 <div>
     <dev>{{ .Content }}</dev>
+    <ul>
     {{ range $index, $element := $paginator.Pages }}
-    <div>
-        - <a href="{{ .Permalink }}">{{ .Title }}</a>
+    <li>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
         {{$page := .}}
         {{with .Description}}
         <p>{{.}}</p>
         {{end}}
-        <div>
-            {{with .Date}}
-                {{.Format "Jan 2 2006"}}
-            {{end}}
-            <br>
-            {{with .Params.tags}}
-                Tags: {{ delimit . ", " }}
-            {{end}}
-        </div>
-    </div>
+        {{with .Date}}
+            <span class="meta">{{.Format "Jan 2 2006"}}</span>
+        {{end}}
+        <br>
+        {{with .Params.tags}}
+        <ul class="tags">
+        {{ range $index, $element := . }}
+            <li class="meta">{{ . }}</li>
+        {{end}}
+        </ul>
+        {{end}}
+    </li>
     {{end}}
+    </ul>
     {{ template "_internal/pagination.html" . }}
 </div>
 {{ end }}

@@ -6,8 +6,9 @@
 {{ with .Params.meals }}
     <ul>
     {{ range $meal, $portions := . }}
+        {{- $meal_page := $.GetPage (print "/recipes/" $meal ".md") -}}
         <li>
-        <a href="/recipes/{{ $meal | urlize }}?portions={{ $portions }}">{{ $meal }} x {{ $portions }}</a>
+        <a href="/recipes/{{ $meal | urlize }}?portions={{ $portions }}">{{ $meal_page.Title }} x {{ $portions }}</a>
         </li>
     {{ end }}
     </ul>
