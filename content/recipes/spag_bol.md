@@ -1,6 +1,7 @@
 ---
 title: "Spaghetti Bolognese"
 tags: ["italian"]
+date: 2024-09-30
 ingredients:
   - name: cumin
     quantity_per_serving:

@@ -1,7 +1,9 @@
 {{ define "main" }}
+{{- $pages := sort .Pages "Date" "desc" -}}
+{{- $paginator := .Paginate $pages -}}
 <div>
-    <dev>{{.Section | title}}</dev>
-    {{ range $index, $element := .Paginator.Pages }}
+    <dev>{{ .Content }}</dev>
+    {{ range $index, $element := $paginator.Pages }}
     <div>
         - <a href="{{ .Permalink }}">{{ .Title }}</a>
         {{$page := .}}
@@ -19,5 +21,6 @@
         </div>
     </div>
     {{end}}
+    {{ template "_internal/pagination.html" . }}
 </div>
 {{ end }}
