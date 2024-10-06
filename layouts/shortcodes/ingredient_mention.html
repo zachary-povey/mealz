@@ -1,1 +1,1 @@
-<span class="{{ .Get `name` }}" fraction="{{ .Get `fraction` }}"></span>
+<span class="{{ replace (.Get `name`) ` ` `_` }}" fraction="{{ .Get `fraction` }}"></span>

@@ -18,7 +18,7 @@
             {{ range .Page.Params.ingredients }}
             <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
                 data-units="{{ .quantity_per_serving.units }}">
-                {{ printf "%.2f" .quantity_per_serving.value }} {{ .quantity_per_serving.units }} {{ .name }}
+                ""
             </li>
             {{ end }}
         </ul>
@@ -43,11 +43,15 @@
                 const baseQuantity = parseFloat(ingredient.getAttribute('data-quantity'));
                 const units = ingredient.getAttribute('data-units');
                 const name = ingredient.getAttribute('data-name');
-                const scaledQuantity = (baseQuantity * servings).toFixed(2);
+                const scaledQuantity = (baseQuantity * servings);
                 
-                ingredient.textContent = `${scaledQuantity} ${units} ${name}`;
+                if (scaledQuantity > 0){
+                    ingredient.textContent = `${scaledQuantity} ${units} ${name}`;
+                } else {
+                    ingredient.textContent = `${name}`
+                }
 
-                const mentions = document.querySelectorAll(`.${name}`);
+                const mentions = document.querySelectorAll(`.${name.replaceAll(' ', '_')}`);
 
                 mentions.forEach(mention => {
                     var mentionQuantity = scaledQuantity;
