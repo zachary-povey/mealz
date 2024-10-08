@@ -6,6 +6,7 @@ import requests
 import yaml
 from datetime import date
 
+
 class RawRecipe(BaseModel):
     title: str
     ingredients: list[str]
@@ -99,18 +100,58 @@ def get_ingredients_sorted(raw_recipe: RawRecipe, client: OpenAI) -> Recipe:
         messages=[
             {
                 "role": "system",
-                "content": (
-                    (
-                        "Take this formatted recipe and simplify the ingredients such that "
-                        "any preparation (like chopping) is moved into the instructions. "
-                        "Make sure the instructions are formatted as a list of steps."
-                        "Then convert the numeric quantity of the ingredients to a value "
-                        "per serving (by dividing by the total servings specified in the "
-                        "'servings' key. Split the ingredient's units and the value. Where "
-                        "units don't make sense (for example whole numbers of vegetables) "
-                        "return null."
-                    )
-                ),
+                "content": """
+                Take a structured recipe input and transform it into the specified response format as follows:
+
+                1. Split the ingredients into three parts: the ingredient name, the quantity, and the unit (e.g. grams, ml etc. you can also use pseudo-units like "large" - if no unit is appropriate, e.g. "2 onions" with no size specified, set the units value to null).
+                
+                2. Convert the quantity into a per-serving quantity: dividing the quantity by the total number of servings specified in the 'servings' key.
+
+                3. Simplify the ingredient name: move any preparation instructions from the ingredient name (e.g. finely chopped) to extra steps at the beginning of the recipe instructions.
+
+                4. Format the instructions: make them a simple list of steps, one per line with a bullet point.
+
+                So for example:
+                {
+                    "title": "Example Recipe",
+                    "ingredients": [
+                        "2 onions, finely chopped",
+                        "200g of flour",
+                        "1 large egg"
+                    ],
+                    "instructions": "Preheat the oven to 180C. Mix the onions, flour and egg together. Bake for 30 minutes.",
+                    "",
+                    "servings": 4
+                }
+                would become something like:
+                {
+                    "title": "Example Recipe",
+                    "ingredients": [
+                        {
+                            "name": "onions",
+                            "quantity_per_serving": {
+                                "value": 0.5,
+                                "units": null
+                            }
+                        },
+                        {
+                            "name": "flour",
+                            "quantity_per_serving": {
+                                "value": 50,
+                                "units": "g"
+                            }
+                        },
+                        {
+                            "name": "egg",
+                            "quantity_per_serving": {
+                                "value": 0.25,
+                                "units": large
+                            }
+                        }
+                    ]
+                    "instructions": "- Chop the onions finely.\n- Preheat the oven to 180C.\n- Mix the onions, flour and egg together.\n- Bake for 30 minutes.",
+                }
+            """,
             },
             {
                 "role": "user",
@@ -131,15 +172,18 @@ def replace_ingredient_mentions(recipe: Recipe, client: OpenAI) -> Recipe:
         messages=[
             {
                 "role": "system",
-                "content": (
-                    (
-                        "Take the recipe and replace any mentions of ingredients with "
-                        '\'{{< ingredient_mention name="the_ingredient_name" fraction="fraction_used">}}\''
-                        "where fraction refers to the fraction of the total amount of that ingredient used at"
-                        "that point in the recipe. For example 'add half the flour' would be replaced by: "
-                        '\'{{< ingredient_mention name="flour" fraction="0.5">}}\'.'
-                    )
-                ),
+                "content": """
+                    Take these recipe instructions and replace any mentions of ingredients with:
+                    {{< ingredient_mention name="ingredient_name" fraction="fraction_used" >}},
+                    where fraction represents the fraction of the total amount of that ingredient used at that step in the recipe.
+
+                    For example:
+
+                    'Add half the flour' would become {{< ingredient_mention name="flour" fraction="0.5" >}}.
+                    'Use a quarter of the sugar' would become {{< ingredient_mention name="sugar" fraction="0.25" >}}.
+
+                    If the entire amount is used, use 1.0 for fraction. Please replace all such mentions consistently in the recipe instructions.
+                """,
             },
             {
                 "role": "user",
