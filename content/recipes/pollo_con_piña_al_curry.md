@@ -31,11 +31,8 @@ ingredients:
         value: 83.33
 tags: []
 title: "Pollo con piña al curry en papillote"
+original_url: https://cookidoo.es/recipes/recipe/es-ES/r141158
 ---
-# Pollo con piña al curry en papillote
-
-Cookidoo recipe [here](https://cookidoo.es/recipes/recipe/es-ES/r141158).
-
 - Cut the {{< ingredient_mention name="pollo contramuslo" fraction="1.0" >}} into 3 cm pieces.
 - Cut the {{< ingredient_mention name="piña fresca" fraction="1.0" >}} into 2 cm pieces.
 - Place the {{< ingredient_mention name="agua" fraction="1.0" >}} in the vaso.

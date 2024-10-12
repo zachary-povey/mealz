@@ -55,9 +55,8 @@ ingredients:
         value: 0.05555555555555555
 tags: []
 title: Authentic Bolognese Sauce Recipe
+original_url: https://anitalianinmykitchen.com/bolognese-sauce/
 ---
-# Authentic Bolognese Sauce Recipe
-
 - Cut the {{< ingredient_mention name="carrot" fraction="1.0" >}}, {{< ingredient_mention name="celery" fraction="1.0" >}}, and {{< ingredient_mention name="onion" fraction="1.0" >}} very finely.
 - In a medium to large heavy pot, add the {{< ingredient_mention name="olive oil" fraction="1.0" >}} and chopped vegetables. Cook covered on low heat, stirring occasionally, until the {{< ingredient_mention name="onion" fraction="1.0" >}} is transparent.
 - Increase the heat to medium and add the {{< ingredient_mention name="ground beef" fraction="1.0" >}} and {{< ingredient_mention name="ground pork" fraction="1.0" >}}. Stir as the meat cooks to break up the pieces. Once the meat has browned, turn the heat up to high and add the {{< ingredient_mention name="dry red wine" fraction="1.0" >}}. Cook until the alcohol has evaporated and the liquid has evaporated.

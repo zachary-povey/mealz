@@ -71,9 +71,8 @@ ingredients:
         value: 0
 tags: []
 title: Jamie Oliver's Fantastic Fish Pie
+original_url: https://drizzleanddip.com/2020/10/07/jamie-olivers-fantastic-fish-pie-recipe/
 ---
-# Instructions
-
 - Chop the {{< ingredient_mention name="potatoes" fraction="1.0" >}}, {{< ingredient_mention name="onion" fraction="0.5" >}}, {{< ingredient_mention name="carrot" fraction="1.0" >}}, {{< ingredient_mention name="celery stalks" fraction="1.0" >}}, and {{< ingredient_mention name="parsley" fraction="1.0" >}}. Finely chop the {{< ingredient_mention name="onion" fraction="0.5" >}} and {{< ingredient_mention name="parsley" fraction="1.0" >}}. Juice the {{< ingredient_mention name="lemon juice" fraction="1.0" >}}.
 - Preheat oven to 220C/425F.
 - Boil the {{< ingredient_mention name="potatoes" fraction="1.0" >}} in salted water for a couple of minutes.

@@ -39,10 +39,8 @@ ingredients:
         value: 5
 tags: []
 title: Risotto con setas a la cerveza
+original_url: https://cookidoo.es/recipes/recipe/es-ES/r36232
 ---
-# Risotto con setas a la cerveza
-
-Cookidoo recipe [here](https://cookidoo.es/recipes/recipe/es-ES/r36232).
 
 - Cut any large {{< ingredient_mention name="setas frescas" fraction="1.0" >}} into chunks.
 - Heat the {{< ingredient_mention name="caldo de verduras" fraction="1.0" >}} for 10 minutes at 100°C.
