@@ -1,70 +1,74 @@
 {{ define "main" }}
-    <article>
-        <h1>{{ .Title }}</h1>
-        <ul id="ingredient-list">
-            <t2>Ingredients for:</t2>
-            <select id="serving-size" onchange="updateIngredients()">
-                <option value="1">1 serving</option>
-                <option value="2" selected>2 servings</option>
-                <option value="3">3 servings</option>
-                <option value="4">4 servings</option>
-                <option value="5">5 servings</option>
-                <option value="6">6 servings</option>
-                <option value="7">7 servings</option>
-                <option value="8">8 servings</option>
-                <option value="9">9 servings</option>
-                <option value="10">10 servings</option>
-            </select>
-            {{ range .Page.Params.ingredients }}
-            <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
-                data-units="{{ .quantity_per_serving.units }}">
-                ""
-            </li>
-            {{ end }}
-        </ul>
+<article>
+    <h1>{{ .Title }}</h1>
+    <ul id="ingredient-list">
+        <t2>Ingredients for:</t2>
+        <select id="serving-size" onchange="updateIngredients()">
+            <option value="1">1 serving</option>
+            <option value="2" selected>2 servings</option>
+            <option value="3">3 servings</option>
+            <option value="4">4 servings</option>
+            <option value="5">5 servings</option>
+            <option value="6">6 servings</option>
+            <option value="7">7 servings</option>
+            <option value="8">8 servings</option>
+            <option value="9">9 servings</option>
+            <option value="10">10 servings</option>
+        </select>
+        {{ range .Page.Params.ingredients }}
+        <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
+            data-units="{{ .quantity_per_serving.units }}">
+            ""
+        </li>
+        {{ end }}
+    </ul>
 
-        {{ .Content }}
-    </article>
-    <script>
-        function updateIngredients(initial=false) {
-            const servingSelect = document.getElementById('serving-size')
-            if (initial) {
-                const urlParams = new URLSearchParams(window.location.search);
-                const portions = urlParams.get('portions');
-                if (portions !== null) {
-                    servingSelect.value = portions;
-                }
+    {{ .Content }}
+</article>
+<script>
+    function updateIngredients(initial = false) {
+        const servingSelect = document.getElementById('serving-size')
+        if (initial) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const portions = urlParams.get('portions');
+            if (portions !== null) {
+                servingSelect.value = portions;
+            }
+        }
+
+        const servings = servingSelect.value;
+        const ingredients = document.querySelectorAll('#ingredient-list li');
+
+        ingredients.forEach(ingredient => {
+            const baseQuantity = parseFloat(ingredient.getAttribute('data-quantity'));
+            const units = ingredient.getAttribute('data-units');
+            const name = ingredient.getAttribute('data-name');
+            const scaledQuantity = (baseQuantity * servings);
+
+            if (scaledQuantity > 0) {
+                ingredient.textContent = `${scaledQuantity} ${units} ${name}`;
+            } else {
+                ingredient.textContent = `${name}`
             }
 
-            const servings = servingSelect.value;
-            const ingredients = document.querySelectorAll('#ingredient-list li');
+            const mentions = document.querySelectorAll(`.${name.replaceAll(' ', '_')}`);
 
-            ingredients.forEach(ingredient => {
-                const baseQuantity = parseFloat(ingredient.getAttribute('data-quantity'));
-                const units = ingredient.getAttribute('data-units');
-                const name = ingredient.getAttribute('data-name');
-                const scaledQuantity = (baseQuantity * servings);
-                
-                if (scaledQuantity > 0){
-                    ingredient.textContent = `${scaledQuantity} ${units} ${name}`;
-                } else {
-                    ingredient.textContent = `${name}`
+            mentions.forEach(mention => {
+                var mentionQuantity = scaledQuantity;
+                const fraction = parseFloat(mention.getAttribute('fraction'));
+                if (fraction === fraction) {
+                    mentionQuantity = mentionQuantity * fraction;
                 }
-
-                const mentions = document.querySelectorAll(`.${name.replaceAll(' ', '_')}`);
-
-                mentions.forEach(mention => {
-                    var mentionQuantity = scaledQuantity;
-                    const fraction = parseFloat(mention.getAttribute('fraction'));
-                    if (fraction === fraction) {
-                        mentionQuantity = mentionQuantity * fraction;
-                    }
+                if (mentionQuantity > 0) {
                     mention.textContent = `${mentionQuantity} ${units} ${name}`;
-                });
-
+                } else {
+                    mention.textContent = `${name}`;
+                }
             });
-        }
-        updateIngredients(initial=true);
 
-    </script>
+        });
+    }
+    updateIngredients(initial = true);
+
+</script>
 {{ end }}
