@@ -5,6 +5,7 @@ from openai import OpenAI
 import requests
 import yaml
 from datetime import date
+from bs4 import BeautifulSoup
 
 class RawRecipe(BaseModel):
     title: str
@@ -69,6 +70,7 @@ def get_recipe_html(recipe_location: str) -> str:
 
 
 def get_raw_recipe(recipe_html: str, client: OpenAI) -> RawRecipe:
+    soup = BeautifulSoup(recipe_html, 'html.parser')
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
         messages=[
@@ -83,7 +85,7 @@ def get_raw_recipe(recipe_html: str, client: OpenAI) -> RawRecipe:
             },
             {
                 "role": "user",
-                "content": recipe_html,
+                "content": soup.get_text(),
             },
         ],
         response_format=RawRecipe,
