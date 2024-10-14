@@ -39,9 +39,8 @@ ingredients:
         value: 0
 tags: []
 title: Homemade Bircher Muesli Recipe
+original_url: https://cookieandkate.com/homemade-bircher-muesli-recipe/
 ---
-# Homemade Bircher Muesli Recipe
-
 - Grate {{< ingredient_mention name="granny smith apple (or honeycrisp apple)" fraction="0.5" >}} for the initial mixture.
 - In a jar or bowl (a 14-ounce working jar or 1-pint mason jar is perfect), combine {{< ingredient_mention name="old-fashioned oats" fraction="1.0" >}}, {{< ingredient_mention name="raisins (or dried cranberries or cherries)" fraction="1.0" >}}, {{< ingredient_mention name="ground cinnamon" fraction="1.0" >}}, {{< ingredient_mention name="almond butter (or peanut butter)" fraction="1.0" >}}, and {{< ingredient_mention name="applesauce" fraction="1.0" >}}.
 - Stir to combine.
