@@ -32,7 +32,7 @@ class Recipe(BaseModel):
     ingredients: list[Ingredient]
     instructions: str
 
-    def to_markdown(self) -> str:
+    def to_markdown(self, url: str | None = None) -> str:
         md = "---\n"
         md += yaml.dump(
             {
@@ -40,6 +40,7 @@ class Recipe(BaseModel):
                 "date": date.today().isoformat(),
                 "tags": [],
                 "ingredients": [ing.model_dump() for ing in self.ingredients],
+                "original_url": url
             },
             indent=4,
         )
@@ -59,7 +60,7 @@ def main(client: OpenAI, recipe_location: str) -> None:
     filepath = os.path.join(script_dir, "..", "content", "recipes", f"{filename}.md")
 
     with open(filepath, "w") as file:
-        file.write(final_recipe.to_markdown())
+        file.write(final_recipe.to_markdown(recipe_location))
 
 
 def get_recipe_html(recipe_location: str) -> str:
