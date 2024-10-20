@@ -81,11 +81,10 @@ ingredients:
     quantity_per_serving:
         units: null
         value: 1
-tags: []
+tags: ["baby", "lunch"]
 title: Baby-friendly Veg-loaded Chilli Con Carne with Brown Rice
+original_url: https://cookidoo.es/recipes/recipe/es-ES/r692829
 ---
-# Baby-friendly Veg-loaded Chilli Con Carne with Brown Rice
-
 - Peel and quarter {{< ingredient_mention name="onions" fraction="1.0" >}}. Peel and cut {{< ingredient_mention name="sweet potatoes" fraction="1.0" >}}, {{< ingredient_mention name="carrots" fraction="1.0" >}}, and {{< ingredient_mention name="celery" fraction="1.0" >}} into 2 cm pieces.
 - Place {{< ingredient_mention name="garlic" fraction="1.0" >}}, {{< ingredient_mention name="onions" fraction="1.0" >}}, {{< ingredient_mention name="sweet potatoes" fraction="1.0" >}}, {{< ingredient_mention name="carrots" fraction="1.0" >}}, and {{< ingredient_mention name="celery" fraction="1.0" >}} in the Thermomix bowl and chop for 5 seconds/speed 5.
 - Add {{< ingredient_mention name="olive oil" fraction="1.0" >}} and sauté for 5 minutes/120°C/speed 1.
