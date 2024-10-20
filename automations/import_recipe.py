@@ -6,6 +6,9 @@ import requests
 import yaml
 from datetime import date
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from chromedriver_py import binary_path
 
 class RawRecipe(BaseModel):
     title: str
@@ -64,10 +67,21 @@ def get_recipe_html(recipe_location: str) -> str:
         with open(recipe_location, "r") as file:
             return file.read()
     else:
-        response = requests.get(recipe_location)
-        response.raise_for_status()
-        return response.text
-
+        try:
+            response = requests.get(recipe_location)
+            response.raise_for_status()
+            return response.text
+        except requests.HTTPError as e:
+            if e.response.status_code == 403:
+                svc = webdriver.ChromeService(executable_path=binary_path)
+                chrome_options = Options()
+                chrome_options.add_argument("--headless")
+                driver = webdriver.Chrome(service=svc, options=chrome_options)
+                driver.get(recipe_location)
+                html = driver.page_source
+                driver.close()
+                return html
+            raise
 
 def get_raw_recipe(recipe_html: str, client: OpenAI) -> RawRecipe:
     soup = BeautifulSoup(recipe_html, 'html.parser')
