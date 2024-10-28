@@ -124,7 +124,7 @@ def get_ingredients_sorted(raw_recipe: RawRecipe, client: OpenAI) -> Recipe:
                 
                 2. Convert the quantity into a per-serving quantity: dividing the quantity by the total number of servings specified in the 'servings' key.
 
-                3. Simplify the ingredient name: make it a simple name, make it lower case, drop un-necessary words and move any preparation instructions from the ingredient name (e.g. finely chopped) to extra steps at the beginning of the recipe instructions.
+                3. Simplify the ingredient name: make it a simple name made up of only letters and spaces, make it lower case, drop un-necessary words and move any preparation instructions from the ingredient name (e.g. finely chopped) to extra steps at the beginning of the recipe instructions.
 
                 4. Format the instructions: make them a simple list of steps, one per line with a bullet point.
 
