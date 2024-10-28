@@ -9,7 +9,7 @@ ingredients:
         value: 90
 -   name: eggs
     quantity_per_serving:
-        value: 0.5
+        value: 1
 -   name: sweetcorn
     quantity_per_serving:
         units: can
@@ -25,7 +25,7 @@ ingredients:
 -   name: cherry tomatoes
     quantity_per_serving:
         units: grams
-        value: 100
+        value: 50
 -   name: extra virgin olive oil
     quantity_per_serving:
         units: tbsp
