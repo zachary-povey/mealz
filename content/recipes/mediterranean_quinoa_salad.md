@@ -13,15 +13,11 @@ ingredients:
     quantity_per_serving:
         units: cups
         value: 0.125
--   name: mung beans
-    quantity_per_serving:
-        units: cups
-        value: 0.04125
--   name: grape tomatoes
+-   name: cherry tomatoes
     quantity_per_serving:
         units: cups
         value: 0.125
--   name: italian flat leaf parsley
+-   name: parsley
     quantity_per_serving:
         units: tablespoons
         value: 0.25
@@ -29,7 +25,7 @@ ingredients:
     quantity_per_serving:
         units: tablespoons
         value: 0.125
--   name: feta
+-   name: goats cheese
     quantity_per_serving:
         units: cups
         value: 0.0625
@@ -57,7 +53,7 @@ ingredients:
     quantity_per_serving:
         units: tablespoons
         value: 0.25
--   name: prosecco vinegar
+-   name: balsamic vinegar
     quantity_per_serving:
         units: tablespoons
         value: 0.125
@@ -76,10 +72,14 @@ ingredients:
 tags: ["dinner", "lunch"]
 title: Mediterranean Quinoa Salad
 ---
-- Cook the {{< ingredient_mention name="tri color quinoa" fraction="1.0" >}} as per package directions, preferably with chicken or vegetable stock.  
-- Rinse the {{< ingredient_mention name="tri color quinoa" fraction="1.0" >}}, and bring to a boil over medium high heat, reduce heat, simmer for 15 minutes until water is absorbed. Remove, cover, and let rest for 5 minutes. Cool.  
-- Mix the {{< ingredient_mention name="red onion" fraction="1.0" >}} and {{< ingredient_mention name="red wine vinegar" fraction="1.0" >}} to pickle the onions.  
-- Whisk together {{< ingredient_mention name="olive oil" fraction="1.0" >}}, {{< ingredient_mention name="lemon" fraction="0.5" >}} zest, {{< ingredient_mention name="lemon juice" fraction="1.0" >}}, {{< ingredient_mention name="prosecco vinegar" fraction="1.0" >}}, {{< ingredient_mention name="honey" fraction="1.0" >}}, minced or grated {{< ingredient_mention name="garlic" fraction="1.0" >}}, and a pinch of {{< ingredient_mention name="salt" fraction="0.05" >}} to make the dressing.  
-- Combine cooked {{< ingredient_mention name="tri color quinoa" fraction="1.0" >}}, {{< ingredient_mention name="spinach" fraction="1.0" >}}, {{< ingredient_mention name="cucumber" fraction="1.0" >}}, {{< ingredient_mention name="grape tomatoes" fraction="1.0" >}}, pickled {{< ingredient_mention name="red onion" fraction="1.0" >}}, {{< ingredient_mention name="italian flat leaf parsley" fraction="1.0" >}}, {{< ingredient_mention name="basil" fraction="1.0" >}}, {{< ingredient_mention name="feta" fraction="1.0" >}}, and {{< ingredient_mention name="mung beans" fraction="1.0" >}} in a large bowl.  
-- Toss with dressing, seasoning with {{< ingredient_mention name="salt and pepper" fraction="1.0" >}} to taste.  
+- Cook the {{< ingredient_mention name="tri color quinoa" fraction="1.0" >}} as per package directions, preferably with chicken or vegetable stock.
+- Finely dice the {{< ingredient_mention name="red onion" fraction="1.0" >}}.
+- Mix the {{< ingredient_mention name="red onion" fraction="1.0" >}} and {{< ingredient_mention name="red wine vinegar" fraction="1.0" >}} to pickle the onions. 
+- Chop the {{< ingredient_mention name="cherry tomatoes" fraction="1.0" >}} into quarters.
+- Finely dice the {{< ingredient_mention name="cucumber" fraction="1.0" >}}.
+- Chop the {{< ingredient_mention name="spinach" fraction="1.0" >}} into small pieces.
+- Finely chop the {{< ingredient_mention name="parsley" fraction="1.0" >}}.
+- Chop the {{< ingredient_mention name="goats cheese" fraction="1.0" >}}.
+- Whisk together {{< ingredient_mention name="olive oil" fraction="1.0" >}}, {{< ingredient_mention name="lemon" fraction="0.5" >}} zest, {{< ingredient_mention name="lemon juice" fraction="1.0" >}}, {{< ingredient_mention name="balsamic vinegar" fraction="1.0" >}}, {{< ingredient_mention name="honey" fraction="1.0" >}}, minced or grated {{< ingredient_mention name="garlic" fraction="1.0" >}}, and a pinch of {{< ingredient_mention name="salt" fraction="0.05" >}} to make the dressing.  
+- Combine cooked {{< ingredient_mention name="tri color quinoa" fraction="1.0" >}}, {{< ingredient_mention name="spinach" fraction="1.0" >}}, {{< ingredient_mention name="cucumber" fraction="1.0" >}}, {{< ingredient_mention name="cherry tomatoes" fraction="1.0" >}}, pickled {{< ingredient_mention name="red onion" fraction="1.0" >}}, {{< ingredient_mention name="parsley" fraction="1.0" >}}, {{< ingredient_mention name="basil" fraction="1.0" >}} and {{< ingredient_mention name="goats cheese" fraction="1.0" >}} in a large bowl.  
 - Refrigerate for at least 10 minutes, adding dressing before serving.  
