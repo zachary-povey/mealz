@@ -45,7 +45,7 @@ class Recipe(BaseModel):
             indent=4,
         )
         md += "---\n"
-        md += f"# {self.title}\n\n{self.instructions}"
+        md += f"\n{self.instructions}"
         return md
 
 
