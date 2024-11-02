@@ -10,6 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from chromedriver_py import binary_path
 
+
 class RawRecipe(BaseModel):
     title: str
     ingredients: list[str]
@@ -40,9 +41,10 @@ class Recipe(BaseModel):
                 "date": date.today().isoformat(),
                 "tags": [],
                 "ingredients": [ing.model_dump() for ing in self.ingredients],
-                "original_url": url
+                "original_url": url,
             },
             indent=4,
+            allow_unicode=True,
         )
         md += "---\n"
         md += f"\n{self.instructions}"
@@ -84,8 +86,9 @@ def get_recipe_html(recipe_location: str) -> str:
                 return html
             raise
 
+
 def get_raw_recipe(recipe_html: str, client: OpenAI) -> RawRecipe:
-    soup = BeautifulSoup(recipe_html, 'html.parser')
+    soup = BeautifulSoup(recipe_html, "html.parser")
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
         messages=[
