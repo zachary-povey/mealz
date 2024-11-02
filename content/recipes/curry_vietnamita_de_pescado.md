@@ -49,10 +49,6 @@ ingredients:
     quantity_per_serving:
         units: g
         value: 133.33
--   name: "salm\xF3n fresco"
-    quantity_per_serving:
-        units: g
-        value: 133.33
 -   name: aceite de girasol
     quantity_per_serving:
         units: g
@@ -86,6 +82,6 @@ title: Curry vietnamita de pescado
 - Peel and slice {{< ingredient_mention name="jengibre" fraction="1.0" >}}.
 - Marinate the fish with {{< ingredient_mention name="tomate" fraction="1.0" >}}, {{< ingredient_mention name="chile rojo fresco" fraction="1.0" >}}, {{< ingredient_mention name="ajo" fraction="1.0" >}}, {{< ingredient_mention name="cúrcuma" fraction="1.0" >}}, {{< ingredient_mention name="jengibre" fraction="1.0" >}}, crushed {{< ingredient_mention name="caldo de verduras" fraction="1.0" >}}, {{< ingredient_mention name="cebolleta" fraction="1.0" >}}, {{< ingredient_mention name="salsa de pescado" fraction="1.0" >}}, {{< ingredient_mention name="pulpa de tamarindo" fraction="1.0" >}}, {{< ingredient_mention name="zumo de limón" fraction="1.0" >}}, and {{< ingredient_mention name="salsa de soja" fraction="1.0" >}}. Let it rest.
 - Heat {{< ingredient_mention name="aceite de girasol" fraction="1.0" >}} in a pan, add {{< ingredient_mention name="calabaza" fraction="1.0" >}}, and cook for a few minutes.
-- Add marinated {{< ingredient_mention name="bacalao fresco" fraction="0.5" >}} and {{< ingredient_mention name="salmón fresco" fraction="0.5" >}} and cook on medium heat.
+- Add marinated {{< ingredient_mention name="bacalao fresco" fraction="0.5" >}} and cook on medium heat.
 - Add {{< ingredient_mention name="leche de coco" fraction="1.0" >}} and {{< ingredient_mention name="lemon grass" fraction="1.0" >}}, cook until the fish is done.
 - Serve hot, garnished with sliced {{< ingredient_mention name="chile rojo fresco" fraction="1.0" >}}.
