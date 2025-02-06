@@ -1,14 +1,14 @@
 import os
-from typing import List, TypedDict
+from typing import Dict, List, Set, Tuple, TypedDict
 import requests
 from dataclasses import dataclass
 from datetime import datetime
 import frontmatter
+from thefuzz import fuzz
 
 script_dir = os.path.abspath(os.path.dirname(__file__))
 content_dir = os.path.abspath(os.path.join(script_dir, "..", "content"))
-
-
+adjective_dir = os.path.abspath(os.path.join(script_dir, "words", "adjectives"))
 @dataclass
 class Config:
     meal_plan: str
@@ -116,17 +116,74 @@ def create_checklist_in_trello(card_id: str, name: str, config: Config) -> str:
     response.raise_for_status()
     return response.json()["id"]
 
-def get_raw_ingredients(config: Config) -> List[dict]:
+def name_similarity(name1: str, name2: str, weights: Tuple[float, float] = (0.55, 0.45)):
+    w_sort, w_partial = weights
+
+    return (w_sort * fuzz.token_sort_ratio(name1, name2)) + (w_partial * fuzz.partial_token_sort_ratio(name1, name2))
+
+def get_raw_ingredients(config: Config, adjectives: Set[str]) -> List[dict]:
     #  {"ing": [{"units": "g", "name": "flour", "quantity": 100}]}
-    meal_plan = frontmatter.load(config.meal_plan_path).to_dict()
+
+    recipe_dir = os.path.join(content_dir, "recipes")
+    meal_plan: dict = frontmatter.load(config.meal_plan_path).to_dict()
+    all_ing_names = set()
+    all_ings = []
+    for meal_name, portions in meal_plan["meals"].items():
+        meal_fpath = os.path.join(recipe_dir, f"{meal_name}.md")
+        recipe: dict = frontmatter.load(meal_fpath).to_dict()
+        ingredients = recipe["ingredients"]
+        ing_names = [ing["name"] for ing in ingredients]
+        all_ing_names = {*all_ing_names, *ing_names}
+        
+    
+    name_map: Dict[str, set[str]] = {}
+    cleaned_names: Dict[str, str] = {}
+    cutoff = 80
+    while True:
+        if len(all_ing_names) == 0:
+            break
+
+        ing_name = all_ing_names.pop()
+        cleaned_ing_name = " ".join([word for word in ing_name.split(" ") if word not in adjectives])
+        cleaned_names[ing_name] = cleaned_ing_name
+
+        for other_ing_name in reversed((name_map.keys())):
+            similarity = name_similarity(ing_name, other_ing_name)
+            # similarity = name_similarity(cleaned_ing_name, cleaned_names[other_ing_name])
+            if similarity >= cutoff:
+                name_map[other_ing_name].add(ing_name)
+                name_map[ing_name] = name_map[other_ing_name]
+                break
+        else: # if no match found
+            name_map[ing_name] = {ing_name}
+    
+    from pprint import pprint
+    pprint(name_map)
+
+
+    ingredients = {}  # {"ing_name": {"units": total, "units2": total2}}
+    # for each meal, portitons:
+    #  fetch details and multiply qunaitty by portions
+    #  convert units to metric
+       
     pass
 
-def main(meal_plan: str):
+
+def get_adjectives() -> Set[str]:
+    all_adj = set()
+    for filename in os.listdir(adjective_dir):
+        with open(os.path.join(adjective_dir, filename)) as fp:
+            adjs = {word.lower().strip() for word in fp.readlines()}
+            all_adj.update(adjs)
+    return all_adj
+    
+
+def main():
     config = Config.from_env()
-    raw_ingredients = get_raw_ingredients(config)
+    adjectives = get_adjectives()
+    raw_ingredients = get_raw_ingredients(config, adjectives)
     # create_list_in_trello(["eggs", "milk", "flour"], config)
 
 
 if __name__ == "__main__":
-    meal_plan = os.getenv("MEAL_PLAN", "2024-11-01")
-    main(meal_plan)
+    main()
