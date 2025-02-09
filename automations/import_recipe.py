@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 from pydantic import BaseModel
 from openai import OpenAI
 import requests
@@ -52,11 +51,15 @@ class Recipe(BaseModel):
 
 
 def main(client: OpenAI, recipe_location: str) -> None:
+    print("Doing manual preprocessing...")
     recipe_html = get_recipe_html(recipe_location)
+    print("Formatting as recipe object...")
     raw_recipe = get_raw_recipe(recipe_html, client)
+    print("Normalizing ingredients...")
     ingredients_sorted = get_ingredients_sorted(raw_recipe, client)
+    print("Templating Instructions...")
     final_recipe = replace_ingredient_mentions(ingredients_sorted, client)
-
+    print("Outputting...")
     script_dir = os.path.dirname(__file__)
     filename = final_recipe.title.replace(" ", "_").replace("'", "").lower()
     filepath = os.path.join(script_dir, "..", "content", "recipes", f"{filename}.md")
@@ -78,8 +81,9 @@ def get_recipe_html(recipe_location: str) -> str:
             if e.response.status_code == 403:
                 svc = webdriver.ChromeService(executable_path=binary_path)
                 chrome_options = Options()
-                chrome_options.add_argument("--headless")
+                # chrome_options.add_argument("--headless")
                 driver = webdriver.Chrome(service=svc, options=chrome_options)
+                import pdb; pdb.set_trace()
                 driver.get(recipe_location)
                 html = driver.page_source
                 driver.close()
@@ -110,7 +114,6 @@ def get_raw_recipe(recipe_html: str, client: OpenAI) -> RawRecipe:
     )
     response = completion.choices[0].message.parsed
     assert response is not None, "Null response!"
-    pprint(response.model_dump())
     return response
 
 
@@ -182,7 +185,6 @@ def get_ingredients_sorted(raw_recipe: RawRecipe, client: OpenAI) -> Recipe:
     )
     response = completion.choices[0].message.parsed
     assert response is not None, "Null response!"
-    pprint(response.model_dump())
     return response
 
 
@@ -228,8 +230,10 @@ def replace_ingredient_mentions(recipe: Recipe, client: OpenAI) -> Recipe:
 if __name__ == "__main__":
     try:
         api_key = os.environ["OAI_KEY"]
-        recipe = os.environ["RECIPE"]
+        recipes = os.environ["RECIPE"].split(",")
     except KeyError as e:
         raise ValueError(f"Missing required environment variable '{e}'")
     client = OpenAI(api_key=api_key)
-    main(client, recipe)
+    for recipe in recipes:
+        print(f"Importing: {recipe}")
+        main(client, recipe)

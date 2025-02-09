@@ -26,7 +26,7 @@
 <ul>
 {{- range $ingredient, $total := $allIngredients }}
     {{ $first := true }}
-    <li>{{ $ingredient }}: {{ range $unit, $quantity := $total }}{{ if (not $first) }}{{ ", " }}{{ else }}{{ $first = false }}{{ end }}{{ $quantity }} {{ $unit }}{{ end }}</li>
+    <li>{{ $ingredient }}: {{ range $unit, $quantity := $total }}{{ if (not $first) }}{{ ", " }}{{ else }}{{ $first = false }}{{ end }}{{ math.Round $quantity }} {{ $unit }}{{ end }}</li>
 {{- end }}
 {{ else }}
     <p>No meals are defined in the front matter.</p>
