@@ -81,9 +81,8 @@ def get_recipe_html(recipe_location: str) -> str:
             if e.response.status_code == 403:
                 svc = webdriver.ChromeService(executable_path=binary_path)
                 chrome_options = Options()
-                # chrome_options.add_argument("--headless")
+                chrome_options.add_argument("--headless")
                 driver = webdriver.Chrome(service=svc, options=chrome_options)
-                import pdb; pdb.set_trace()
                 driver.get(recipe_location)
                 html = driver.page_source
                 driver.close()
