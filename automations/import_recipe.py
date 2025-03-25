@@ -79,6 +79,7 @@ def get_recipe_html(recipe_location: str) -> str:
             return response.text
         except requests.HTTPError as e:
             if e.response.status_code == 403:
+                print("Got a 403, trying with selenium...")
                 svc = webdriver.ChromeService(executable_path=binary_path)
                 chrome_options = Options()
                 chrome_options.add_argument("--headless")
