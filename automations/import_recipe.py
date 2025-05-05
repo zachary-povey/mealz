@@ -132,7 +132,7 @@ def get_ingredients_sorted(raw_recipe: RawRecipe, client: OpenAI) -> Recipe:
 
                 3. Simplify the ingredient name: make it a simple name made up of only letters and spaces, make it lower case, drop un-necessary words and move any preparation instructions from the ingredient name (e.g. finely chopped) to extra steps at the beginning of the recipe instructions.
 
-                4. Format the instructions: make them a simple list of steps, one per line with a bullet point.
+                4. Format the instructions: make them a simple list of steps, one per line in a numbered list.
 
                 So for example:
                 {
@@ -172,7 +172,7 @@ def get_ingredients_sorted(raw_recipe: RawRecipe, client: OpenAI) -> Recipe:
                             }
                         }
                     ]
-                    "instructions": "- Chop the onions finely.\n- Preheat the oven to 180C.\n- Mix the onions, flour and egg together.\n- Bake for 30 minutes.",
+                    "instructions": "1. Chop the onions finely.\n2. Preheat the oven to 180C.\n3. Mix the onions, flour and egg together.\n4. Bake for 30 minutes.",
                 }
             """,
             },
