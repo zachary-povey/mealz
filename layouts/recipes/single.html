@@ -2,42 +2,39 @@
 <article>
     <h1>{{ .Title }}</h1>
     {{- with .Params.original_url }}
-    <a><a href="{{ . }}">Original Recipe</a>
+    <a href="{{ . }}">Original Recipe</a>
     {{- end }}
     <h2>Quantity</h2>
     <t2>For:</t2>
     <select id="serving-size" onchange="setPortions()">
-        <option value="1">1 serving</option>
-        <option value="2" selected>2 servings</option>
-        <option value="3">3 servings</option>
-        <option value="4">4 servings</option>
-        <option value="5">5 servings</option>
-        <option value="6">6 servings</option>
-        <option value="7">7 servings</option>
-        <option value="8">8 servings</option>
-        <option value="9">9 servings</option>
-        <option value="10">10 servings</option>
-        <option value="11">11 servings</option>
-        <option value="12">12 servings</option>
-        <option value="13">13 servings</option>
-        <option value="14">14 servings</option>
-        <option value="15">15 servings</option>
-        <option value="16">16 servings</option>
-        <option value="17">17 servings</option>
-        <option value="18">18 servings</option>
+        {{ range seq 1 18 }}
+        <option value="{{ . }}" {{ if eq . 2 }}selected{{ end }}>{{ . }} serving{{ if ne . 1 }}s{{ end }}</option>
+        {{ end }}
     </select>
+
     <h2>Ingredients</h2>
     <ul id="ingredient-list">
         {{ range .Page.Params.ingredients }}
-        <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}"
-            data-units="{{ .quantity_per_serving.units }}">
-            ""
+        <li data-name="{{ .name }}" data-quantity="{{ .quantity_per_serving.value }}" data-units="{{ .quantity_per_serving.units }}">
+            <label>
+                <input type="checkbox" onchange="toggleChecked(this)">
+                <span class="ingredient-text"></span>
+            </label>
         </li>
         {{ end }}
     </ul>
+
     <h2>Steps</h2>
     {{ .Content }}
 </article>
+
+<style>
+    .checked {
+        text-decoration: line-through;
+        color: #999;
+    }
+</style>
+
 <script>
     function updateIngredients(initial = false) {
         const servingSelect = document.getElementById('serving-size')
@@ -56,16 +53,16 @@
             const baseQuantity = parseFloat(ingredient.getAttribute('data-quantity'));
             const units = ingredient.getAttribute('data-units');
             const name = ingredient.getAttribute('data-name');
-            const scaledQuantity = (baseQuantity * servings);
+            const scaledQuantity = baseQuantity * servings;
 
+            const span = ingredient.querySelector('.ingredient-text');
             if (scaledQuantity > 0) {
-                ingredient.textContent = `${twoDp(scaledQuantity)} ${units} ${name}`;
+                span.textContent = `${twoDp(scaledQuantity)} ${units} ${name}`;
             } else {
-                ingredient.textContent = `${name}`
+                span.textContent = `${name}`;
             }
 
             const mentions = document.querySelectorAll(`.${name.replaceAll(' ', '_')}`);
-
             mentions.forEach(mention => {
                 var mentionQuantity = scaledQuantity;
                 const fraction = parseFloat(mention.getAttribute('fraction'));
@@ -78,12 +75,18 @@
                     mention.textContent = `${name}`;
                 }
             });
-
         });
     }
+
+    function toggleChecked(checkbox) {
+        const span = checkbox.parentElement.querySelector('.ingredient-text');
+        span.classList.toggle('checked', checkbox.checked);
+    }
+
     function twoDp(num) {
         return parseFloat(num.toFixed(2))
     }
+
     function setPortions() {
         const servingSelect = document.getElementById('serving-size');
         const servings = servingSelect.value;
@@ -91,7 +94,7 @@
         url.searchParams.set('portions', servings);
         window.location.href = url.toString();
     }
-    updateIngredients(initial = true);
 
+    updateIngredients(initial = true);
 </script>
 {{ end }}
