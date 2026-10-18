@@ -3,94 +3,69 @@
 # You can hand-edit `similar_lunch_dishes`; an entry is re-judged (overwriting any edits)
 # when its recipe or the nursery menu changes, as that changes its `fingerprint`.
 baked_salmon_with_couscous:
-  fingerprint: 443973aa1fc72a46
+  fingerprint: 823ef44c33507a12
   similar_lunch_dishes:
-  - cazuela de fideos (pescado)
-  - ensalada variada (pescado)
   - merluza con patatas al horno
-  - palitos de merluza al horno con patatas
-  - pasta con melva y tomate
-  - patatas guisadas con pescado
-  - rosada a la plancha con ensalada
-  - rosada frita con ensalada
-  - sopa de pescada
-  - tortilla de melva con ensalada
 bolitas_de_calabaza:
-  fingerprint: ceb95222c7e5fbd1
-  similar_lunch_dishes:
-  - crema de calabaza
+  fingerprint: 3f5474eacfe138bb
+  similar_lunch_dishes: []
 cauliflower_cheese_with_pasta:
-  fingerprint: 2e361c190c67d868
+  fingerprint: fe6126a9eb5df690
   similar_lunch_dishes: []
 cheesy_scrambled_eggs_on_toast:
-  fingerprint: 8c8c982113c0ed23
+  fingerprint: 1066de70ddd1794a
   similar_lunch_dishes:
   - tortilla de melva con ensalada
   - tortilla de patatas
 chicken_and_cheese_quesadillas:
-  fingerprint: 38e58f3cfc11de07
+  fingerprint: fd7d64cdabfdb009
   similar_lunch_dishes: []
 gnocchi_in_cheese_sauce:
-  fingerprint: f065475d6adb2ea9
+  fingerprint: 1675d18b88548f9c
   similar_lunch_dishes: []
 ham_and_cheese_crepes:
-  fingerprint: b44e43ecf07e8ab5
+  fingerprint: 2106df3cab8072d3
   similar_lunch_dishes: []
 macaroni_cheese:
-  fingerprint: a4d7c4babf62a90f
-  similar_lunch_dishes:
-  - pasta boloñesa
-  - pasta con melva y tomate
+  fingerprint: e40a0794828f6f9d
+  similar_lunch_dishes: []
 mediterranean_quinoa_salad:
-  fingerprint: f00f8baeef259929
+  fingerprint: f2fbea98fd33106a
   similar_lunch_dishes:
   - ensalada de tomate y maíz
   - ensalada variada (pescado)
   - queso tierno con ensalada
 mild_chicken_curry_with_rice:
-  fingerprint: a938dc0a2769be55
+  fingerprint: 93d746ab5c81eedb
   similar_lunch_dishes:
-  - lentejas con verduras
   - pollo estofado con guisantes y zanahoria
   - pollo guisado con champiñones
   - pollo guisado con verduras
 noodles_with_egg_and_vegetables:
-  fingerprint: 11ed9bd409b6a948
-  similar_lunch_dishes:
-  - cazuela de fideos (pescado)
-  - pasta boloñesa
-  - pasta con melva y tomate
-  - sopa con garbanzos y fideos
-  - sopa de fideíllos
+  fingerprint: 98935b88c8f7f771
+  similar_lunch_dishes: []
 picky_tea:
-  fingerprint: 075ae6f7095dc6c4
+  fingerprint: 49d8cd968098d7d6
   similar_lunch_dishes:
   - queso tierno con ensalada
-  - tortilla de melva con ensalada
-  - tortilla de patatas
 pita_pizzas:
-  fingerprint: 1ac887f0467b4f45
+  fingerprint: 7a6da94868ba5691
   similar_lunch_dishes: []
 sausages_and_mash:
-  fingerprint: 60d0ed50822b3523
-  similar_lunch_dishes:
-  - hamburguesitas con patatas fritas
+  fingerprint: 57edf9dc713afcff
+  similar_lunch_dishes: []
 tomato_soup_and_grilled_cheese:
-  fingerprint: a484ea07e17b5e60
+  fingerprint: 64d23d84b0926b47
   similar_lunch_dishes:
   - crema de calabacín
   - crema de calabaza
   - crema de verduras
   - crema de zanahoria
 tortilla_paisana:
-  fingerprint: e07f23a1502021f5
+  fingerprint: b4bb4def7605cb33
   similar_lunch_dishes:
   - tortilla de melva con ensalada
   - tortilla de patatas
 turkey_strips_with_couscous_and_yogurt:
-  fingerprint: badb3c3640723fe1
-  similar_lunch_dishes:
-  - crema de calabacín
-  - crema de calabaza
-  - crema de verduras
-  - crema de zanahoria
+  fingerprint: e7a37faa9965e022
+  similar_lunch_dishes: []
