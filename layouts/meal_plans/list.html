@@ -1,0 +1,66 @@
+{{ define "main" }}
+<div class="meal-plans">
+    <h1>{{ .Title }}</h1>
+    <p id="no-upcoming" class="meta" hidden>No dinners are planned for this week yet.</p>
+
+    <div id="weeks">
+    {{- range sort .Pages "Params.plan_start" "asc" }}
+        {{- $plan := . }}
+        {{- $entries := partial "meal_plan_entries.html" $plan }}
+        <section class="week" data-end="{{ (time.AsTime $plan.Params.plan_end).Format "2006-01-02" }}">
+            <h2>{{ $plan.Title }}</h2>
+            <p><a href="{{ $plan.RelPermalink }}">Shopping list</a></p>
+            {{- with $plan.Params.relaxed_rules }}
+            <p class="meta">Not enough dinner recipes to avoid: {{ delimit . ", " }}.</p>
+            {{- end }}
+            {{- if $plan.Params.dinners }}
+            <table class="dinners">
+                <thead><tr><th>Day</th><th>Dinner</th><th>Nursery lunch</th></tr></thead>
+                <tbody>
+                {{- range $entries }}
+                    <tr data-date="{{ .date.Format "2006-01-02" }}">
+                        <td class="day">{{ .date.Format "Mon 2" }}</td>
+                        <td><a href="{{ .page.RelPermalink }}?portions={{ .portions }}">{{ .page.Title }}</a></td>
+                        <td class="lunch{{ if not .lunch }} none{{ end }}">{{ with .lunch }}{{ delimit . " · " }}{{ else }}<span class="meta">no nursery</span>{{ end }}</td>
+                    </tr>
+                {{- end }}
+                </tbody>
+            </table>
+            {{- else }}
+            <ul>
+            {{- range $entries }}
+                <li><a href="{{ .page.RelPermalink }}?portions={{ .portions }}">{{ .page.Title }}</a> x {{ .portions }}</li>
+            {{- end }}
+            </ul>
+            {{- end }}
+        </section>
+    {{- end }}
+    </div>
+
+    <details id="past-weeks" hidden>
+        <summary>Past weeks</summary>
+    </details>
+
+    <p class="meta">
+        Dinners for the next week are planned automatically every Wednesday.
+        {{- with site.Params.plannerWorkflowURL }} To re-plan next week now, <a href="{{ . }}">run the planner</a> ("Run workflow").{{ end }}
+    </p>
+</div>
+
+<script>
+    (function () {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        const today = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+
+        const weeks = Array.from(document.querySelectorAll('#weeks .week'));
+        const past = weeks.filter((week) => week.dataset.end < today);
+        const pastWeeks = document.getElementById('past-weeks');
+        past.reverse().forEach((week) => pastWeeks.appendChild(week));
+        pastWeeks.hidden = past.length === 0;
+        document.getElementById('no-upcoming').hidden = past.length !== weeks.length;
+
+        document.querySelectorAll(`tr[data-date="${today}"]`).forEach((row) => row.classList.add('today'));
+    })();
+</script>
+{{ end }}

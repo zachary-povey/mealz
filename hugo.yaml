@@ -3,3 +3,6 @@ relativeURLs: true
 canonifyURLs: true
 languageCode: 'en-uk'
 title: 'My New Hugo Site'
+params:
+  plannerWorkflowURL: 'https://github.com/zachary-povey/mealz/actions/workflows/plan-dinners.yaml'
+buildFuture: true

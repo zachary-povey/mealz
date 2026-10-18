@@ -1,1 +1,3 @@
-# Meal Plans
+---
+title: Dinner plans
+---

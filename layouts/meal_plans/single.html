@@ -1,35 +1,102 @@
-
 {{ define "main" }}
-<div class="meal-plan">
-<h1>{{ .Title }}</h1>
-{{ with .Params.meals }}
-{{- $allIngredients := dict }}
+{{- $entries := partial "meal_plan_entries.html" . }}
+{{- $totals := newScratch }}
+{{- $uses := newScratch }}
+{{- range $entries }}
+    {{- $entry := . }}
+    {{- range $entry.page.Params.ingredients }}
+        {{- $name := .name }}
+        {{- $units := "" }}
+        {{- $perServing := 0 }}
+        {{- with .quantity_per_serving }}
+            {{- $units = .units | default "" }}
+            {{- $perServing = .value | default 0 }}
+        {{- end }}
+        {{- $current := 0 }}
+        {{- with $totals.Get $name }}{{ with index . $units }}{{ $current = . }}{{ end }}{{ end }}
+        {{- $totals.SetInMap $name $units (add $current (mul $perServing $entry.portions)) }}
+        {{- $uses.Add $name (slice $entry.label) }}
+    {{- end }}
+{{- end }}
+
+<article class="shopping-list" data-plan="{{ .File.ContentBaseName }}">
+    <p><a href="{{ .Parent.RelPermalink }}">All dinner plans</a></p>
+    <h1>Shopping list</h1>
+    <p class="meta">{{ .Title }}</p>
+
     <ul>
-    {{ range $meal, $portions := . }}
-        {{- $meal_page := $.GetPage (print "/recipes/" $meal ".md") -}}
-        {{- with $meal_page.Params.ingredients }}
-            {{- range $index, $ingredient := . }}
-                {{- $currentTotal := or (index $allIngredients $ingredient.name) dict }}
-                {{- $units := or $ingredient.quantity_per_serving.units "" }}
-                {{- $currentTotalUnit := or (index $currentTotal $units) 0.0 }}
-                {{- $newTotal := add $currentTotalUnit (mul $ingredient.quantity_per_serving.value $portions) }}
-                {{- $newTotalDict := dict $ingredient.name (dict $units $newTotal) }}
-                {{- $allIngredients = merge $allIngredients $newTotalDict }}
+    {{- range $entries }}
+        <li>{{ with .date }}{{ .Format "Mon" }}: {{ end }}<a href="{{ .page.RelPermalink }}?portions={{ .portions }}">{{ .page.Title }}</a> x {{ .portions }}</li>
+    {{- end }}
+    </ul>
+
+    <h2>Ingredients</h2>
+    <ul id="shopping-items">
+    {{- range $name, $byUnit := $totals.Values }}
+        {{- $quantities := slice }}
+        {{- range $units, $total := $byUnit }}
+            {{- if gt $total 0 }}
+                {{- $amount := "" }}
+                {{- if ge $total 10 }}
+                    {{- $amount = string (math.Round $total) }}
+                {{- else }}
+                    {{- $amount = lang.FormatNumber 2 $total | strings.TrimRight "0" | strings.TrimRight "." }}
+                {{- end }}
+                {{- $quantities = $quantities | append (trim (printf "%s %s" $amount $units) " ") }}
             {{- end }}
         {{- end }}
-        <li>
-        <a href="/recipes/{{ $meal | urlize }}?portions={{ $portions }}">{{ $meal_page.Title }} x {{ $portions }}</a>
+        <li data-item="{{ $name }}">
+            <label>
+                <input type="checkbox">
+                <span class="item-text">{{ $name }}{{ with $quantities }}: {{ delimit . " + " }}{{ end }}</span>
+                <span class="meta">({{ delimit (uniq ($uses.Get $name)) ", " }})</span>
+            </label>
         </li>
-    {{ end }}
+    {{- end }}
     </ul>
-<h2>Shopping List</h2>
-<ul>
-{{- range $ingredient, $total := $allIngredients }}
-    {{ $first := true }}
-    <li>{{ $ingredient }}: {{ range $unit, $quantity := $total }}{{ if (not $first) }}{{ ", " }}{{ else }}{{ $first = false }}{{ end }}{{ math.Round $quantity }} {{ $unit }}{{ end }}</li>
-{{- end }}
-{{ else }}
-    <p>No meals are defined in the front matter.</p>
-{{ end }}
-</div>
+    <button type="button" id="clear-ticks">Clear ticks</button>
+    <p class="meta">Ticks are saved in this browser only.</p>
+</article>
+
+<script>
+    (function () {
+        const storageKey = `mealz-shopping-${document.querySelector('.shopping-list').dataset.plan}`;
+        const load = () => {
+            try {
+                return JSON.parse(localStorage.getItem(storageKey)) || {};
+            } catch (e) {
+                return {};
+            }
+        };
+        const save = (ticks) => {
+            try {
+                localStorage.setItem(storageKey, JSON.stringify(ticks));
+            } catch (e) {}
+        };
+
+        const ticks = load();
+        const items = document.querySelectorAll('#shopping-items li');
+        const render = () => items.forEach((item) => {
+            const ticked = Boolean(ticks[item.dataset.item]);
+            item.querySelector('input').checked = ticked;
+            item.querySelector('.item-text').classList.toggle('checked', ticked);
+        });
+
+        items.forEach((item) => item.querySelector('input').addEventListener('change', (event) => {
+            if (event.target.checked) {
+                ticks[item.dataset.item] = true;
+            } else {
+                delete ticks[item.dataset.item];
+            }
+            save(ticks);
+            render();
+        }));
+        document.getElementById('clear-ticks').addEventListener('click', () => {
+            Object.keys(ticks).forEach((key) => delete ticks[key]);
+            save(ticks);
+            render();
+        });
+        render();
+    })();
+</script>
 {{ end }}

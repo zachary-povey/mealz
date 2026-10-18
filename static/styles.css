@@ -395,3 +395,76 @@ table td {
     padding: 6px 13px;
     border: 1px solid #dfe2e5;
 }
+/* Meal plans */
+.week table.dinners {
+    width: 100%;
+}
+
+.week table.dinners td.day {
+    white-space: nowrap;
+}
+
+.week table.dinners td.lunch {
+    color: #737373;
+}
+
+.week table.dinners tr.today,
+.week table.dinners tr.today td {
+    background-color: #fff4d6;
+}
+
+@media screen and (max-width: 600px) {
+    .week table.dinners,
+    .week table.dinners tbody {
+        display: block;
+    }
+
+    .week table.dinners thead,
+    .week table.dinners td.lunch.none {
+        display: none;
+    }
+
+    .week table.dinners tr {
+        display: grid;
+        grid-template-columns: 7ch 1fr;
+        border-bottom: 1px solid #dfe2e5;
+        padding: 4px 0;
+    }
+
+    .week table.dinners td {
+        border: none;
+        padding: 2px 6px;
+    }
+
+    .week table.dinners td.lunch {
+        grid-column: 2;
+        font-size: 0.9em;
+    }
+
+    .week table.dinners td.lunch::before {
+        content: 'Nursery: ';
+    }
+}
+
+#past-weeks {
+    margin-top: 3em;
+}
+
+#past-weeks summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.checked {
+    text-decoration: line-through;
+    color: #999;
+}
+
+#shopping-items li {
+    text-indent: 0;
+    margin-bottom: 0.3em;
+}
+
+#shopping-items li::before {
+    content: none;
+}

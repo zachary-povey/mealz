@@ -1,0 +1,25 @@
+{{- /*
+  Returns the meals in a meal plan page as a slice of dicts with keys:
+    page (the recipe page), portions, label (what the meal is for, e.g. "Mon"),
+    and for day-by-day plans also date and lunch (the nursery lunch dishes that day).
+  Handles both day-by-day plans (`dinners`, made by the planner) and older plans (`meals`).
+*/ -}}
+{{- $plan := . -}}
+{{- $entries := slice -}}
+{{- with $plan.Params.dinners -}}
+  {{- $portions := $plan.Params.portions -}}
+  {{- if not $portions }}{{ errorf "Meal plan %q has dinners but no portions" $plan.File.Path }}{{ end -}}
+  {{- range . -}}
+    {{- $recipe := site.GetPage (printf "/recipes/%s.md" .recipe) -}}
+    {{- if not (and $recipe $recipe.IsPage) }}{{ errorf "Meal plan %q has a dinner recipe %q that doesn't exist" $plan.File.Path .recipe }}{{ end -}}
+    {{- $day := time.AsTime .date -}}
+    {{- $entries = $entries | append (dict "page" $recipe "portions" $portions "label" ($day.Format "Mon") "date" $day "lunch" (.nursery_lunch | default slice)) -}}
+  {{- end -}}
+{{- else -}}
+  {{- range $slug, $portions := $plan.Params.meals -}}
+    {{- $recipe := site.GetPage (printf "/recipes/%s.md" $slug) -}}
+    {{- if not (and $recipe $recipe.IsPage) }}{{ errorf "Meal plan %q has a recipe %q that doesn't exist" $plan.File.Path $slug }}{{ end -}}
+    {{- $entries = $entries | append (dict "page" $recipe "portions" $portions "label" $recipe.Title) -}}
+  {{- end -}}
+{{- end -}}
+{{- return $entries -}}
