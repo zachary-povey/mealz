@@ -12,7 +12,7 @@ from pydantic import BaseModel, create_model
 from meal_planner.recipes import Recipe
 
 # Bump to re-judge every recipe after changing how similarity is judged.
-JUDGEMENT_VERSION = 1
+JUDGEMENT_VERSION = 2
 DEFAULT_OPENAI_MODEL = "gpt-5-mini"
 MAX_INSTRUCTION_CHARS = 2000
 
@@ -29,14 +29,24 @@ must not repeat what he had for lunch that day.
 
 You are given one dinner recipe and the list of every dish on the nursery's lunch menu. \
 Return the lunch dishes that are the same meal as the dinner, or so similar that eating both \
-on the same day would feel like having the same meal twice. For example: the same dish under \
-another name or in another language, the same main ingredient cooked in the same style (two \
-chicken stews, two potato omelettes, two lentil dishes, pasta with a meat and tomato sauce \
-versus pasta boloñesa), or two blended vegetable soups.
+on the same day would feel like having the same meal twice.
 
-Don't count dishes as similar just because they share a minor ingredient, a side salad or a \
-cooking method while the main ingredients differ. Most recipes are similar to none or only a \
-few of the dishes. Lunch dish names are in Spanish; recipes may be in English or Spanish."""
+Compare the dishes as they appear on the plate: what a person would call the meal. Two dishes \
+are very similar only when they have the same main component prepared in a similar way, for \
+example: the same dish under another name or in another language, two chicken stews, two \
+potato omelettes, two lentil stews, pasta in a meat and tomato sauce versus pasta boloñesa, or \
+two smooth blended vegetable soups.
+
+They are not similar just because:
+- they belong to the same broad category but are prepared differently (baked salmon with \
+couscous is not like a fish soup, fish stewed with potatoes or pasta with tuna; a stir fry \
+of egg noodles is not like pasta boloñesa or a noodle soup);
+- they share a minor ingredient, a side salad or a cooking method;
+- the recipe hides vegetables by blending them into a sauce, stock, mash or batter (that \
+does not make it a soup or a vegetable dish).
+
+Most recipes are similar to none of the dishes or only one or two. Lunch dish names are in \
+Spanish; recipes may be in English or Spanish."""
 
 
 class SimilarityJudge(Protocol):
