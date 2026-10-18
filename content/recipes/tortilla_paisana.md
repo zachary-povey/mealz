@@ -1,58 +1,59 @@
 ---
-date: '2024-10-20'
+date: "2024-10-20"
 ingredients:
--   name: patata
+  - name: patata
     quantity_per_serving:
-        units: g
-        value: 75
--   name: zanahoria
+      units: g
+      value: 75
+  - name: zanahoria
     quantity_per_serving:
-        units: g
-        value: 20
--   name: agua
+      units: g
+      value: 20
+  - name: agua
     quantity_per_serving:
-        units: g
-        value: 142.5
--   name: cebolleta
+      units: g
+      value: 142.5
+  - name: cebolleta
     quantity_per_serving:
-        units: g
-        value: 25
--   name: pimiento verde
+      units: g
+      value: 25
+  - name: pimiento verde
     quantity_per_serving:
-        units: g
-        value: 12.5
--   name: pimiento rojo
+      units: g
+      value: 12.5
+  - name: pimiento rojo
     quantity_per_serving:
-        units: g
-        value: 12.5
--   name: aceite de oliva
+      units: g
+      value: 12.5
+  - name: aceite de oliva
     quantity_per_serving:
-        units: g
-        value: 15
--   name: guisantes congelados
+      units: g
+      value: 15
+  - name: guisantes congelados
     quantity_per_serving:
-        units: g
-        value: 25
--   name: sal
+      units: g
+      value: 25
+  - name: sal
     quantity_per_serving:
-        units: cucharadita
-        value: 0.25
--   name: huevo
+      units: cucharadita
+      value: 0.25
+  - name: huevo
     quantity_per_serving:
-        units: M
-        value: 1.25
--   name: ajo
+      units: M
+      value: 1.25
+  - name: ajo
     quantity_per_serving:
-        units: diente
-        value: 0.25
--   name: "jam\xF3n curado"
+      units: diente
+      value: 0.25
+  - name: "jam\xF3n curado"
     quantity_per_serving:
-        units: g
-        value: 17.5
-tags: ["dinner"]
+      units: g
+      value: 17.5
+tags: []
 title: Tortilla Paisana
 original_url: https://cookidoo.es/recipes/recipe/es-ES/r94766
 ---
+
 - Cut {{< ingredient_mention name="patata" fraction="1.0" >}} into large, regular pieces (5x5 cm).
 - Cut {{< ingredient_mention name="zanahoria" fraction="1.0" >}} into 2 cm slices.
 - Put {{< ingredient_mention name="patata" fraction="1.0" >}}, {{< ingredient_mention name="zanahoria" fraction="1.0" >}}, and {{< ingredient_mention name="agua" fraction="1.0" >}} in the bowl. Chop 2 sec/speed 5.
