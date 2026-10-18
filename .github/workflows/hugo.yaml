@@ -10,6 +10,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # Lets the dinner planner deploy the plan it has just committed
+  workflow_call:
+    inputs:
+      ref:
+        description: Commit to build and deploy
+        required: true
+        type: string
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -43,6 +51,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.ref || github.sha }}
           submodules: recursive
           fetch-depth: 0
       - name: Setup Pages

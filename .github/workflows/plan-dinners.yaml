@@ -1,0 +1,63 @@
+# Plans dinners for the week starting next Monday, commits the plan and redeploys the site.
+# Runs every Wednesday, and can be run by hand ("Run workflow") to re-plan next week.
+name: Plan dinners
+
+on:
+  schedule:
+    # 05:00 UTC is 06:00 or 07:00 in Spain.
+    - cron: "0 5 * * 3"
+  workflow_dispatch:
+
+concurrency:
+  group: plan-dinners
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: automations/meal_planner/requirements.txt
+      - name: Install dependencies
+        run: pip install -r automations/meal_planner/requirements.txt
+      - name: Test the planner
+        working-directory: automations
+        run: python -m pytest -q
+      - name: Plan next week's dinners
+        working-directory: automations
+        env:
+          OAI_KEY: ${{ secrets.OAI_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+        run: python -m meal_planner
+      - name: Commit the plan
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all content/meal_plans data/lunch_similarity.yaml
+          git commit -m "Plan next week's dinners"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: plan
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/hugo.yaml
+    with:
+      ref: ${{ needs.plan.outputs.sha }}
