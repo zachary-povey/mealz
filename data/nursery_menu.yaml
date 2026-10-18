@@ -1,0 +1,34 @@
+# Nursery lunch menu: a fixed four-week rotation, weekdays only (no nursery lunch at weekends).
+#
+# `anchor` pins the rotation to the calendar: the week starting on `week_start` (a Monday)
+# is rotation week `rotation_week`, and the rotation carries on in order from there. If the
+# nursery skips or repeats a week, move the anchor to a later Monday to re-align it.
+anchor:
+  week_start: 2026-09-14
+  rotation_week: 2
+
+weeks:
+  1:
+    monday: [crema de calabacín, lomo guisado con tomate]
+    tuesday: [cazuela de fideos (pescado), rosada frita con ensalada]
+    wednesday: [cocido de garbanzos con arroz, tortilla de patatas]
+    thursday: [sopa de picadillo, pollo guisado con verduras]
+    friday: [ensalada variada (pescado), pasta boloñesa]
+  2:
+    monday: [lentejas con verduras, croquetas de pollo]
+    tuesday: [patatas guisadas con pescado, queso tierno con ensalada]
+    wednesday: [crema de calabaza, albóndigas con tomate y patatas fritas]
+    thursday: [pasta con melva y tomate, ensalada de tomate y maíz]
+    friday: [sopa de fideíllos, merluza con patatas al horno]
+  3:
+    monday: [arroz guisado con carne, tortilla de melva con ensalada]
+    tuesday: [sopa de lluvia, pollo estofado con guisantes y zanahoria]
+    wednesday: [cocido de garbanzos con patatas, carne del cocido]
+    thursday: [crema de zanahoria, rosada a la plancha con ensalada]
+    friday: [ensalada variada (pescado), pasta boloñesa]
+  4:
+    monday: [crema de verduras, croquetas de jamón con ensalada]
+    tuesday: [potaje de alubias, palitos de merluza al horno con patatas]
+    wednesday: [patatas guisadas con ternera, queso tierno con ensalada]
+    thursday: [sopa con garbanzos y fideos, pollo guisado con champiñones]
+    friday: [sopa de pescada, hamburguesitas con patatas fritas]
